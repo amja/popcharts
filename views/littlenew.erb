@@ -1,0 +1,30 @@
+<pre>
+
+<% @i = 0 #prepare variable for loop%>
+
+<%# Loop 5 times, displaying a song each time. %>
+<% 5.times do %>	
+<%= "<img src='#{@final['entry'][@i]['image'][2]['content']}'>" %>
+<%= @final['entry'][@i]['title'][0] %>
+<% @i += 1 %>
+<% end %>
+
+<% Songs.destroy %>
+<%
+s = Songs.new
+s.ident = Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
+s.name1 = @final['entry'][0]['title'][0]
+s.url1 = @final['entry'][0]['image'][2]['content']
+s.name2 = @final['entry'][1]['title'][0]
+s.url2 = @final['entry'][1]['image'][2]['content']
+s.name3 = @final['entry'][2]['title'][0]
+s.url3 = @final['entry'][2]['image'][2]['content']
+s.name4 = @final['entry'][3]['title'][0]
+s.url4 = @final['entry'][3]['image'][2]['content']
+s.name5 = @final['entry'][4]['title'][0]
+s.url5 = @final['entry'][4]['image'][2]['content']
+s.country = ""
+s.save
+%>
+
+
