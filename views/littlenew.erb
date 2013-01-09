@@ -1,5 +1,5 @@
 <pre>
-
+new
 <% @i = 0 #prepare variable for loop%>
 
 <%# Loop 5 times, displaying a song each time. %>
@@ -9,7 +9,7 @@
 <% @i += 1 %>
 <% end %>
 
-<% Songs.destroy %>
+<% @song.destroy unless @song.nil?%>
 <%
 s = Songs.new
 s.ident = Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
@@ -23,7 +23,7 @@ s.name4 = @final['entry'][3]['title'][0]
 s.url4 = @final['entry'][3]['image'][2]['content']
 s.name5 = @final['entry'][4]['title'][0]
 s.url5 = @final['entry'][4]['image'][2]['content']
-s.country = ""
+s.country = @country
 s.save
 %>
 

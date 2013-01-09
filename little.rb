@@ -9,7 +9,7 @@ require 'active_support/all'
 require 'xmlsimple'
 require 'digest/sha2'
 set :port, 80
-
+set :public_folder, 'public'
 
 DataMapper::Property::Text.length(255) #set text max length (fixing bug which occured when inputting SHA-2)
 
@@ -17,7 +17,7 @@ DataMapper::Property::Text.length(255) #set text max length (fixing bug which oc
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/little.db")  
 class Songs  
   include DataMapper::Resource  
-  property :ident, String, key: true, :length => 64
+  property :ident, String, :length => 64
   property :name1, Text  
   property :url1, Text  
   property :name2, Text  
@@ -28,16 +28,20 @@ class Songs
   property :url4, Text
   property :name5, Text  
   property :url5, Text
-  property :country, String 
+  property :country, String, key: true
 end  
 DataMapper.finalize.auto_upgrade! 
 
+get '/meta.json' do
 
+	erb :meta
+end
 
-get '/edition' do
-
+get '/edition/' do
 	
-	@final = XmlSimple.xml_in(Net::HTTP.get('itunes.apple.com','/gb/rss/topsongs/limit=5/xml'))#get XML and convert into array
+	return 400, 'Error: No country' if params[:country].nil?
+	@country = params[:country]
+	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
 	#To classify the new incoming top 5
 	class Othersong 
@@ -63,17 +67,54 @@ get '/edition' do
 	four = Othersong.new(4,@final)
 	five = Othersong.new(5,@final)
 	
-	#gets first row with same ident as top 5
-	@song = Songs.first ident: Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
+	#gets row for selected country
+	@song = Songs.first country: "#{@country}"
+	if @song != nil
+		ident = @song.ident
+		
+		#checks if current country songs are the same as the most recent ones
+		if ident != Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
+			#if the songs have changed, choose this view
+			erb :littlenew
+			
+		else
+			#if the songs are the same, choose this view
+			erb :littleold
+			
+		end
 	
-
-	if @song.nil? || @song == 0
-		#if the songs have changed, choose this view
-		erb :littlenew
 	else
-		#if the songs are the same, choose this view
-		erb :littleold
+		erb :littlenew
 	end
-	
+end
 
+get '/' do
+
+	"no peeking!"
+end
+
+get '/sample/' do
+
+erb :sample
+end
+
+post '/validate_config/' do
+
+  response = {}
+  response[:errors] = []
+  response[:valid] = true
+
+  if params[:config].nil?
+  	return 400, "You didn't post a config"
+  end
+
+  settings = JSON.parse(params[:config])
+
+  if settings['country'].nil? || settings['country'] == ""
+  	response[:valid] = false
+  	response[:errors].push("Please select a country")
+  end
+
+  content_type :json
+  response.to_json
 end
