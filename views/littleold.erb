@@ -1,17 +1,34 @@
-<pre>
-old	
-<%= "<img src='#{@song.url1}'>" %>
-<%= @song.name1 %>
-
-<%= "<img src='#{@song.url2}'>" %>
-<%= @song.name2 %>
-
-<%= "<img src='#{@song.url3}'>" %>
-<%= @song.name3 %>
-
-<%= "<img src='#{@song.url4}'>" %>
-<%= @song.name4 %>
-
-<%= "<img src='#{@song.url5}'>" %>
-<%= @song.name5 %>
-<% etag @song.ident %>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="http://five.amosjackson.com/style.css">
+</head>
+<body>
+	<div id="songs">
+		<div class="song">
+		<%= "<img src='#{@song.url1}' class='dither'>" %>
+		<h1><%= "1. #{@song.name1}" %></h1>
+		</div>
+		
+		<div class="song">
+		<%= "<img src='#{@song.url2}' class='dither'>" %>
+		<h1><%= "2. #{@song.name2}" %></h1>
+		</div>
+		
+		<div class="song">
+		<%= "<img src='#{@song.url3}' class='dither'>" %>
+		<h1><%= "3. #{@song.name3}" %></h1>
+		</div>
+		
+		<div class="song">
+		<%= "<img src='#{@song.url4}' class='dither'>" %>
+		<h1><%= "4. #{@song.name4}" %></h1>
+		</div>
+		
+		<div class="song">
+		<%= "<img src='#{@song.url5}' class='dither'>" %>
+		<h1><%= "5. #{@song.name5}" %></h1>
+		</div>
+	</div>
+</body>
+</html>

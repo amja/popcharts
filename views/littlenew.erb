@@ -1,11 +1,11 @@
-<pre>
-new
 <% @i = 0 #prepare variable for loop%>
 
 <%# Loop 5 times, displaying a song each time. %>
-<% 5.times do %>	
-<%= "<img src='#{@final['entry'][@i]['image'][2]['content']}'>" %>
+<% 5.times do %>
+<%= "<div class='song'>" %>	
+<%= "<img src='#{@final['entry'][@i]['image'][2]['content']}' class='dither'>" %>
 <%= @final['entry'][@i]['title'][0] %>
+<%= "</div>" %>
 <% @i += 1 %>
 <% end %>
 

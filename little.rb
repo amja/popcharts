@@ -39,8 +39,8 @@ end
 
 get '/edition/' do
 	
-	return 400, 'Error: No country' if params[:country].nil?
-	@country = params[:country]
+	return 400, 'Error: No country' if params[:c].nil?
+	@country = params[:c]
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
 	#To classify the new incoming top 5
