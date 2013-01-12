@@ -8,6 +8,7 @@ require 'net/http'
 require 'active_support/all'
 require 'xmlsimple'
 require 'digest/sha2'
+#require 'dragonfly'
 set :port, 80
 set :public_folder, 'public'
 
@@ -31,6 +32,8 @@ class Songs
   property :country, String, key: true
 end  
 DataMapper.finalize.auto_upgrade! 
+
+
 
 get '/meta.json' do
 
