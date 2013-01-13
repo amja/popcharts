@@ -1,13 +1,24 @@
-<% @i = 0 #prepare variable for loop%>
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="http://five.amosjackson.com/style.css">
+</head>
+<body>
+	<img src="http://five.amosjackson.com/header.jpg" id="header">
+	<div id="songs">
+		<% @i = 0 #prepare variable for loop%>
+		<%# Loop 5 times, displaying a song each time. %>
+		<% 5.times do %>
+		<%= "<div class='song'>" %>	
+		<%= "<img src='#{@final['entry'][@i]['image'][2]['content']}' class='dither'>" %>
+		<h1><%= @final['entry'][@i]['title'][0] %></h1>
+		<%= "</div>" %>
+		<% @i += 1 %>
+		<% end %>
+	</div>
+</body>
+</html>
 
-<%# Loop 5 times, displaying a song each time. %>
-<% 5.times do %>
-<%= "<div class='song'>" %>	
-<%= "<img src='#{@final['entry'][@i]['image'][2]['content']}' class='dither'>" %>
-<%= @final['entry'][@i]['title'][0] %>
-<%= "</div>" %>
-<% @i += 1 %>
-<% end %>
 
 <% @song.destroy unless @song.nil?%>
 <%
