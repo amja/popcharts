@@ -43,6 +43,7 @@ end
 get '/edition/' do
 	
 	return 400, 'Error: No country' if params[:c].nil?
+	
 	@country = params[:c]
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
@@ -77,10 +78,14 @@ get '/edition/' do
 		
 		#checks if current country songs are the same as the most recent ones
 		if ident != Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
+			
+			etag Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
 			#if the songs have changed, choose this view
 			erb :littlenew
 			
 		else
+
+			etag Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
 			#if the songs are the same, choose this view
 			erb :littleold
 			
