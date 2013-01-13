@@ -92,6 +92,7 @@ get '/edition/' do
 		end
 	
 	else
+		etag Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
 		erb :littlenew
 	end
 end
