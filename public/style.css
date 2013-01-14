@@ -14,15 +14,15 @@ body{
 
 
 h1{
+	font-family:'Crimson';
 	padding:5px;	
 	width:274px;
-	font-size:20px;
+	font-size:23px;
 	font-weight:normal;
 	float:right;
 }
 .dither{
 
-	width:100px;
 	margin-bottom:5px;
 	float:left;
 	clear:left;
