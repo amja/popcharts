@@ -11,7 +11,7 @@
 		<% 5.times do %>
 		<%= "<div class='song'>" %>	
 		<%= "<img src='http://amosjackson.com/resize?img=#{@final['entry'][@i]['image'][2]['content']}' class='dither'>" %>
-		<h1><%= @final['entry'][@i]['title'][0] %></h1>
+		<h1><%= "#{@i+1} #{@final['entry'][@i]['title'][0]}" %></h1>
 		<%= "</div>" %>
 		<% @i += 1 %>
 		<% end %>
