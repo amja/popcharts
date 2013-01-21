@@ -5,27 +5,35 @@ body{
 }
 
 .song{
-	display:block;
+	margin-bottom:25px;
 	width:384px;
-	height:100px;
 
 }
+
 
 
 
 h1{
-	font-family:'Crimson';
-	padding:5px;	
-	width:274px;
-	font-size:23px;
-	font-weight:normal;
-	float:right;
+	display:inline;
+	font-family:'Quattrocento Roman';
+	font-size:26px;
+	font-weight:bold;
+	
 }
 .dither{
+	display:block;
+	margin:0 auto;
+	margin-top:10px;
+	margin-bottom:10px;
+}
 
-	margin-bottom:5px;
-	float:left;
-	clear:left;
+h2{
+	display:inline;
+	font-family:'Quattrocento Roman'
+	font-size:23px;
+	font-weight:normal;
+	
+
 }
 
 * {
