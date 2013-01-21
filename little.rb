@@ -8,9 +8,10 @@ require 'net/http'
 require 'active_support/all'
 require 'xmlsimple'
 require 'digest/sha2'
-#require 'dragonfly'
+
 set :port, 80
 set :public_folder, 'public'
+#set :environment, :production
 
 DataMapper::Property::Text.length(255) #set text max length (fixing bug which occured when inputting SHA-2)
 
@@ -21,14 +22,10 @@ class Songs
   property :ident, String, :length => 64
   property :name1, Text  
   property :url1, Text  
-  property :name2, Text  
-  property :url2, Text 
-  property :name3, Text  
-  property :url3, Text  
+  property :name2, Text   
+  property :name3, Text   
   property :name4, Text  
-  property :url4, Text
   property :name5, Text  
-  property :url5, Text
   property :country, String, key: true
 end  
 DataMapper.finalize.auto_upgrade! 
@@ -41,6 +38,10 @@ get '/meta.json' do
 end
 
 get '/edition/' do
+	
+	date = Time.parse(params['local_delivery_time'])
+	# Return if today is not Monday.
+	return unless date.friday?
 	
 	return 400, 'Error: No country' if params[:c].nil?
 	
