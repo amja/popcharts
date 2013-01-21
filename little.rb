@@ -11,7 +11,7 @@ require 'digest/sha2'
 
 set :port, 80
 set :public_folder, 'public'
-#set :environment, :production
+set :environment, :production
 
 DataMapper::Property::Text.length(255) #set text max length (fixing bug which occured when inputting SHA-2)
 
@@ -39,12 +39,15 @@ end
 
 get '/edition/' do
 	
+	
+	
+	return 400, 'Error: No country' if params[:c].nil?
+	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
+	
 	date = Time.parse(params['local_delivery_time'])
 	# Return if today is not Monday.
 	return unless date.friday?
-	
-	return 400, 'Error: No country' if params[:c].nil?
-	
+
 	@country = params[:c]
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
