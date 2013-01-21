@@ -9,10 +9,9 @@
 		<% @i = 0 #prepare variable for loop%>
 		<%# Loop 5 times, displaying a song each time. %>
 		<% 5.times do %>
-		<%= "<div class='song'>" %>	
-		<%= "<img src='http://amosjackson.com/resize?img=#{@final['entry'][@i]['image'][2]['content']}' class='dither'>" %>
-		<h1><%= "#{@i+1} #{@final['entry'][@i]['title'][0]}" %></h1>
-		<%= "</div>" %>
+		<div class="song">
+		<h1><%= @i %>. </h1><h2><%= "#{@final['entry'][@i]['title'][0]}" %></h2>
+		</div>
 		<% @i += 1 %>
 		<% end %>
 	</div>
