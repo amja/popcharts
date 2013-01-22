@@ -10,7 +10,7 @@
 		<%# Loop 5 times, displaying a song each time. %>
 		<% 5.times do %>
 		<div class="song">
-		<h1><%= @i %>. </h1><h2><%= "#{@final['entry'][@i]['title'][0]}" %></h2>
+		<h1><%= @i+1 %>. </h1><h2><%= "#{@final['entry'][@i]['title'][0]}" %></h2>
 		</div>
 		<% @i += 1 %>
 		<% end %>
