@@ -45,7 +45,7 @@ get '/edition/' do
 	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
 	
 	date = Time.parse(params['local_delivery_time'])
-	# Return if today is not Monday.
+	Return if today is not friday.
 	return unless date.friday?
 
 	@country = params[:c]
