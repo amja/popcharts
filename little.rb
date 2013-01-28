@@ -40,15 +40,18 @@ end
 get '/edition/' do
 	
 	
-	
+	#Returns errors if parameters not supplied
 	return 400, 'Error: No country' if params[:c].nil?
 	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
 	
+	#Only displays if it is Friday
 	date = Time.parse(params['local_delivery_time'])
 	Return if today is not friday.
 	return unless date.friday?
 
+
 	@country = params[:c]
+	#Variable for iTunes xml as an array
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
 	#To classify the new incoming top 5
@@ -101,21 +104,25 @@ get '/edition/' do
 	end
 end
 
+#security
 get '/' do
 
 	"no peeking!"
 end
 
+
 get '/sample/' do
 
-erb :sample
+	erb :sample
 end
+
 
 post '/validate_config/' do
 
   response = {}
   response[:errors] = []
   response[:valid] = true
+
 
   if params[:config].nil?
   	return 400, "You didn't post a config"
