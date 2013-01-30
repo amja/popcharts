@@ -5,7 +5,7 @@ body{
 }
 
 .song{
-	margin-bottom:25px;
+	margin-bottom:5px;
 	width:384px;
 
 }
@@ -16,16 +16,11 @@ body{
 h1{
 	display:inline;
 	font-family:'Quattrocento Roman';
-	font-size:26px;
+	font-size:25px;
 	font-weight:bold;
 	
 }
-.dither{
-	display:block;
-	margin:0 auto;
-	margin-top:10px;
-	margin-bottom:10px;
-}
+
 
 h2{
 	display:inline;

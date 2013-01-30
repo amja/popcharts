@@ -46,7 +46,7 @@ get '/edition/' do
 	
 	#Only displays if it is Friday
 	date = Time.parse(params['local_delivery_time'])
-	Return if today is not friday.
+	#Return if today is not friday
 	return unless date.friday?
 
 
@@ -67,7 +67,7 @@ get '/edition/' do
 		end
 
 		def url
-			@final['entry'][@num]['image'][2]['content']
+			@final['entry'][@num]['image'][2]['content'].gsub('170x170','600x600')
 		end
 	end
 
