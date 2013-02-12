@@ -39,3 +39,8 @@ h2{
 	margin-top:10px;
 	margin-bottom:10px;
 }
+
+hr{
+	margin-bottom:1px;
+	border:1px solid black;
+}
