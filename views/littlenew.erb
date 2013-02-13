@@ -21,17 +21,3 @@
 </body>
 </html>
 
-
-<% @song.destroy unless @song.nil?%>
-<%
-s = Songs.new
-s.ident = Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
-s.name1 = @final['entry'][0]['title'][0]
-s.url1 = @final['entry'][0]['image'][2]['content'].gsub('170x170','600x600')
-s.name2 = @final['entry'][1]['title'][0]
-s.name3 = @final['entry'][2]['title'][0]
-s.name4 = @final['entry'][3]['title'][0]
-s.name5 = @final['entry'][4]['title'][0]
-s.country = @country
-s.save
-%>

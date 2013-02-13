@@ -11,24 +11,8 @@ require 'digest/sha2'
 
 set :port, 80
 set :public_folder, 'public'
-set :environment, :production
+set :environment, :development
 
-DataMapper::Property::Text.length(255) #set text max length (fixing bug which occured when inputting SHA-2)
-
-#Set up datamapper
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/little.db")  
-class Songs  
-  include DataMapper::Resource  
-  property :ident, String, :length => 64
-  property :name1, Text  
-  property :url1, Text  
-  property :name2, Text   
-  property :name3, Text   
-  property :name4, Text  
-  property :name5, Text  
-  property :country, String, key: true
-end  
-DataMapper.finalize.auto_upgrade! 
 
 
 
@@ -54,54 +38,9 @@ get '/edition/' do
 	#Variable for iTunes xml as an array
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
-	#To classify the new incoming top 5
-	class Othersong 
-
-		def initialize(num,final)
-			@num = num - 1
-			@final = final
-		end
-
-		def title
-			@final['entry'][@num]['title'][0]
-		end
-
-		def url
-			@final['entry'][@num]['image'][2]['content'].gsub('170x170','600x600')
-		end
-	end
-
-	#making variables to encode
-	one = Othersong.new(1,@final)
-	two = Othersong.new(2,@final)
-	three = Othersong.new(3,@final)
-	four = Othersong.new(4,@final)
-	five = Othersong.new(5,@final)
-	
-	#gets row for selected country
-	@song = Songs.first country: "#{@country}"
-	if @song != nil
-		ident = @song.ident
-		
-		#checks if current country songs are the same as the most recent ones
-		if ident != Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
-			
-			etag Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
-			#if the songs have changed, choose this view
-			erb :littlenew
-			
-		else
-
-			etag Digest::SHA2.hexdigest(one.title+two.title+three.title+four.title+five.title)
-			#if the songs are the same, choose this view
-			erb :littleold
-			
-		end
-	
-	else
-		etag Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
-		erb :littlenew
-	end
+	etag Digest::SHA2.hexdigest(@final['entry'][0]['title'][0]+@final['entry'][1]['title'][0]+@final['entry'][2]['title'][0]+@final['entry'][3]['title'][0]+@final['entry'][4]['title'][0])
+	#if the songs have changed, choose this view
+	erb :littlenew
 end
 
 #security
