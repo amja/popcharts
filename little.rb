@@ -41,8 +41,8 @@ get '/edition/' do
 	
 	
 	#Returns errors if parameters not supplied
-	return 400, 'Error: No country' if params[:c].nil?
-	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
+	return 400, 'Error: No country' if params['c'].nil?
+	return 400, 'No delivery time supplied' if params['local_delivery_time'].nil?
 	
 	#Only displays if it is Friday
 	date = Time.parse(params['local_delivery_time'])
