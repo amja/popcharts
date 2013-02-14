@@ -11,7 +11,7 @@ require 'digest/sha2'
 
 set :port, 80
 set :public_folder, 'public'
-set :environment, :development
+set :environment, :production
 
 
 
@@ -25,16 +25,16 @@ get '/edition/' do
 	
 	
 	#Returns errors if parameters not supplied
-	return 400, 'Error: No country' if params['c'].nil?
-	return 400, 'No delivery time supplied' if params['local_delivery_time'].nil?
+	return 400, 'Error: No country' if params[:country].nil?
+	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
 	
 	#Only displays if it is Friday
-	date = Time.parse(params['local_delivery_time'])
+	date = Time.parse(params[:local_delivery_time])
 	#Return if today is not friday
 	return unless date.friday?
 
 
-	@country = params[:c]
+	@country = params[:country]
 	#Variable for iTunes xml as an array
 	@final = XmlSimple.xml_in(Net::HTTP.get("itunes.apple.com","/#{@country}/rss/topsongs/limit=5/xml"))#get XML and convert into array
 	
