@@ -25,14 +25,19 @@ get '/edition/' do
 	
 	
 	#Returns errors if parameters not supplied
-	return 400, 'Error: No country' if params[:country].nil?
+	return 400, 'No country supplied' if params[:country].nil?
 	return 400, 'No delivery time supplied' if params[:local_delivery_time].nil?
 	
-	#Only displays if it is Friday
-	date = Time.parse(params[:local_delivery_time])
-	#Return if today is not friday
-	return unless date.friday?
-
+	#Default is weekly
+	params[:freq] = "week" if params[:freq].nil?
+	
+	if params[:freq] == "month"
+		#Return if today is not 1st of month
+		return unless Date.parse(params[:local_delivery_time]).beginning_of_month == Date.parse(params[:local_delivery_time])
+	elsif params[:freq] == "week"
+		#Return if today is not friday
+		return unless Date.parse(params[:local_delivery_time]).friday?
+	end
 
 	@country = params[:country]
 	#Variable for iTunes xml as an array

@@ -3,7 +3,7 @@
   "publication_api_version":"1.0",
   "name": "Pop Charts",
   "description": "Get your dose of pop culture each week with the top five songs on the iTunes Store of your country.",
-  "delivered_on":"fridays",
+  "delivered_on":"each day, fridays, or the first day of every month",
   "external_configuration": false,
   "send_timezone_info": true,
   "send_delivery_count": false,
@@ -134,6 +134,17 @@
           ["Virgin Islands, British", "vg"],
           ["Zimbabwe", "zw"]
         ]
+      },
+      {
+      "type": "select",
+      "name": "freq",
+      "label": "Select Frequency",
+      "options":
+      [
+        ["Daily", "day"],
+        ["Weekly", "week"],
+        ["Monthly", "month"]
+      ]
       }
     ]
   }
