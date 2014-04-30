@@ -5,7 +5,7 @@
 </head>
 <body>
 	<img src="http://five.amosjackson.com/header.jpg" id="header">
-	<%= "<img src='http://amosjackson.com/resize?img=#{@final['entry'][0]['image'][2]['content'].gsub('170x170','600x600')}' class='dither'>" %>
+	<%= "<img src='http://amos.im/resize?img=#{@final['entry'][0]['image'][2]['content'].gsub('170x170','600x600')}' class='dither'>" %>
 	<div id="songs">
 		<% @i = 0 #prepare variable for loop%>
 		<%# Loop 5 times, displaying a song each time. %>
@@ -20,4 +20,3 @@
 	<hr>
 </body>
 </html>
-
