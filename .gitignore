@@ -1,3 +1,4 @@
 tmp
 tmp/*
 config.ru
+.DS_Store
